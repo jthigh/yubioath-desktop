@@ -4,6 +4,9 @@
 #include <QtWidgets>
 #include <QVariant>
 
+#include <QtDebug>
+#include <sstream>
+
 class ScreenShot: public QObject
 {
     Q_OBJECT
@@ -22,13 +25,25 @@ public:
         std::vector<QImage> screenshots(screens.length());
         std::transform(screens.begin(), screens.end(), screenshots.begin(), &ScreenShot::takeScreenshot);
 
+        for (QScreen *screen : screens) {
+            QRect g = screen->geometry();
+            qDebug() << "Screen: " << screen->name();
+            qDebug() << "Position: (" << g.x() << ", " << g.y() << ")";
+            qDebug() << "Size: (" << g.width() << ", " << g.height() << ")";
+        }
+
         for (QImage image : screenshots) {
             outputWidth = std::max(outputWidth, image.width());
         }
 
+        int i = 0;
         for (QImage image : screenshots) {
             // Monochrome, no dither
             image = image.convertToFormat(QImage::Format_Mono, Qt::ThresholdDither);
+
+            std::ostringstream os;
+            os << "/tmp/yubioath-desktop-screenshot-" << (i++) << ".png";
+            image.save(QString::fromStdString(os.str()));
 
             // Stack screens vertically in output image
             outputHeight += image.height();
@@ -48,6 +63,8 @@ public:
                 }
             }
         }
+
+        qDebug() << "Output size: (" << outputWidth << ", " << outputHeight << ")";
 
         QVariantMap map;
         map.insert("width", outputWidth);
