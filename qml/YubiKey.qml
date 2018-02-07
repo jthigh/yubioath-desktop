@@ -41,9 +41,7 @@ Python {
                     loggingModuleLoaded = true
                 })
                 importModule('yubikey', function () {
-                    do_call('yubikey.init', [], function() {
-                        yubikeyReady = true
-                    })
+                    yubikeyReady = true
                 })
             })
         })
@@ -69,10 +67,8 @@ Python {
     function isModuleReady(funcName) {
         if (funcName.startsWith("logging_setup.")) {
             return loggingModuleLoaded
-        } else if (funcName.startsWith("yubikey.init")) {
-            return loggingConfigured
         } else {
-            return yubikeyReady
+            return loggingConfigured && yubikeyReady
         }
     }
 

@@ -322,9 +322,4 @@ class PixelImage(object):
             self.width * line_number:self.width * (line_number + 1)]
 
 
-controller = None
-
-
-def init():
-    global controller
-    controller = Controller()
+controller = Controller()
