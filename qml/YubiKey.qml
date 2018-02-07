@@ -36,17 +36,18 @@ Python {
         importModule('site', function () {
             call('site.addsitedir', [appDir + '/pymodules'], function () {
                 addImportPath(urlPrefix + '/py')
-                loadLoggingModule()
+
+                importModule('logging_setup', function () {
+                    loggingModuleLoaded = true
+                })
+                importModule('yubikey', function () {
+                    do_call('yubikey.init', [], function() {
+                        yubikeyReady = true
+                    })
+                })
             })
         })
     }
-
-    function loadLoggingModule() {
-        importModule('logging_setup', function () {
-            loggingModuleLoaded = true
-        })
-    }
-    onLoggingModuleLoadedChanged: runQueue()
 
     onEnableLogging: {
         do_call('logging_setup.setup', [log_level || 'DEBUG', log_file || null], function() {
@@ -56,22 +57,20 @@ Python {
     onDisableLogging: {
         loggingConfigured = true
     }
-    onLoggingConfiguredChanged: loadYubikeyModule()
 
-    function loadYubikeyModule() {
-        importModule('yubikey', function () {
-            yubikeyReady = true
-        })
-    }
+    onLoggingModuleLoadedChanged: runQueue()
+    onLoggingConfiguredChanged: runQueue()
     onYubikeyReadyChanged: runQueue()
 
     onHasDeviceChanged: {
         device.validated = false
     }
 
-    function isModuleLoaded(funcName) {
+    function isModuleReady(funcName) {
         if (funcName.startsWith("logging_setup.")) {
             return loggingModuleLoaded
+        } else if (funcName.startsWith("yubikey.init")) {
+            return loggingConfigured
         } else {
             return yubikeyReady
         }
@@ -86,7 +85,7 @@ Python {
     }
 
     function do_call(func, args, cb) {
-        if (!isModuleLoaded(func)) {
+        if (!isModuleReady(func)) {
             queue.push([func, args, cb])
         } else {
             call(func, args.map(JSON.stringify), function (json) {
