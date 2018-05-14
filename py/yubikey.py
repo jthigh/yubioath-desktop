@@ -9,11 +9,12 @@ import ykman.logging_setup
 from base64 import b32encode, b64decode
 from binascii import a2b_hex, b2a_hex
 
-from ykman.descriptor import get_descriptors
+from ykman.descriptor import get_descriptors, Descriptor
 from ykman.util import (TRANSPORT, parse_b32_key)
 from ykman.driver_otp import YkpersError
 from ykman.otp import OtpController
-from ykman.driver_ccid import APDUError
+from ykman.driver_ccid import (
+    APDUError, open_devices as open_ccid, READER_NAME_YK)
 from ykman.oath import (ALGO, OATH_TYPE, OathController, CredentialData,
                         Credential, Code, SW)
 from ykman.settings import Settings
@@ -93,15 +94,21 @@ class Controller(object):
                     setattr(self, f, as_json(func))
 
     def count_devices(self):
-        return len(get_descriptors())
+        return len(
+            get_descriptors()) + len(
+                list(open_ccid(exclude=READER_NAME_YK)))
 
     def refresh(self, otp_mode=False):
         descriptors = get_descriptors()
-        if len(descriptors) != 1:
+        readers = list(open_ccid(exclude=READER_NAME_YK))
+        if (len(descriptors) + len(readers)) != 1:
             self._descriptor = None
             return None
 
-        desc = descriptors[0]
+        if readers:
+            desc = Descriptor.from_driver(readers[0])
+        else:
+            desc = descriptors[0]
 
         unmatched_otp_mode = otp_mode and not desc.mode.has_transport(
             TRANSPORT.OTP)
