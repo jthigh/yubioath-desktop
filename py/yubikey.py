@@ -93,19 +93,29 @@ class Controller(object):
                 if isinstance(func, types.MethodType):
                     setattr(self, f, as_json(func))
 
-    def count_devices(self):
-        return len(
-            get_descriptors()) + len(
-                list(open_ccid(exclude=READER_NAME_YK)))
+    def _count_devices(self, otp_mode=False):
+        descriptors = get_descriptors()
+        if not otp_mode:
+            readers = list(open_ccid(exclude=READER_NAME_YK))
+            n_keys = len(descriptors) + len(readers)
+        else:
+            n_keys = len(descriptors)
+        return n_keys
+
+    def count_devices(self, otp_mode=False):
+        return self._count_devices(otp_mode=otp_mode)
 
     def refresh(self, otp_mode=False):
-        descriptors = get_descriptors()
-        readers = list(open_ccid(exclude=READER_NAME_YK))
-        if (len(descriptors) + len(readers)) != 1:
+        n_keys = self._count_devices(otp_mode=otp_mode)
+        if (n_keys != 1):
             self._descriptor = None
             return None
 
-        if readers:
+        descriptors = get_descriptors()
+        if not otp_mode:
+            readers = list(open_ccid(exclude=READER_NAME_YK))
+
+        if not otp_mode and readers:
             desc = Descriptor.from_driver(readers[0])
         else:
             desc = descriptors[0]

@@ -363,7 +363,7 @@ ApplicationWindow {
     Timer {
         id: ykTimer
         triggeredOnStart: true
-        interval: 500
+        interval: 3000
         repeat: true
         running: appWindow.visible
         onTriggered: device.refresh(settings.slotMode, refreshDependingOnMode)

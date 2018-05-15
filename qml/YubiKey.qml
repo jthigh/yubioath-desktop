@@ -96,7 +96,7 @@ Python {
     }
 
     function refresh(slotMode, refreshCredentialsOnMode) {
-        do_call('yubikey.controller.count_devices', [], function (n) {
+        do_call('yubikey.controller.count_devices', [slotMode], function (n) {
             nDevices = n
             if (nDevices == 1) {
                 do_call('yubikey.controller.refresh', [slotMode],
