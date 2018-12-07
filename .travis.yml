@@ -55,16 +55,6 @@ install:
       sudo make install
       cd ../..
     fi
-  # Install linting tools
-  - sudo pip install --upgrade pip
-  - sudo pip install pre-commit flake8
-
-before_script:
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
-    then
-        pre-commit run --all-files
-    fi
 
 script:
   - |
