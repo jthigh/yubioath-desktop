@@ -38,14 +38,14 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]
     then
       git clone https://github.com/aurelien-rainone/macdeployqtfix.git
-      brew install swig ykpers libyubikey libusb zlib
+      brew install swig ykpers libyubikey libusb
       brew install qt
       brew upgrade qt
       brew link qt -f
       # Build Python 3 with --enable-framework, to be able to distribute it in a .app bundle
       brew upgrade pyenv
       eval "$(pyenv init -)"
-      env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" pyenv install $PY_VERSION
+      env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PY_VERSION
       pyenv global system $PY_VERSION
       # Build and install PyOtherside
       cd lib/pyotherside-$PYOTHERSIDE_VERSION
