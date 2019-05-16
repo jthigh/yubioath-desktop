@@ -35,6 +35,7 @@ ScrollView {
             var nameAndKey = nameLbl.text.length > 0
                     && secretKeyLbl.text.length > 0
             var okTotalLength = (nameLbl.text.length + issuerLbl.text.length) < 60
+
             return nameAndKey && okTotalLength
         }
     }
@@ -73,7 +74,6 @@ ScrollView {
                                                 resp.error_id))
                 }
             })
-
         } else {
             yubiKey.ccidAddCredential(nameLbl.text, secretKeyLbl.text,
                                       issuerLbl.text,

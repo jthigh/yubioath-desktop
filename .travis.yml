@@ -8,7 +8,7 @@ language: cpp
 sudo: required
 
 env:
-  - PY_VERSION="3.6.5" PYOTHERSIDE_VERSION="1.5.3"
+  - PY_VERSION="3.7.3" PYOTHERSIDE_VERSION="1.5.4"
 
 os:
   - osx
@@ -40,6 +40,7 @@ install:
       git clone https://github.com/aurelien-rainone/macdeployqtfix.git
       brew install swig ykpers libyubikey libusb
       brew install qt
+      brew upgrade qt
       brew link qt -f
       # Build Python 3 with --enable-framework, to be able to distribute it in a .app bundle
       brew upgrade pyenv
