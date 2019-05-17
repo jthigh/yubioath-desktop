@@ -102,7 +102,7 @@ after_success:
       rm -rf yubioath-desktop.app/Contents/MacOS/pymodules
       # Fix linking for PyOtherSide
       # otool -L yubioath-desktop.app/Contents/PlugIns/quick/libpyothersideplugin.dylib
-      sudo install_name_tool -change /usr/local/opt/python/Frameworks/Python.framework/Versions/3.6/Python @executable_path/../Frameworks/Python.framework/Versions/3.6/Python yubioath-desktop.app/Contents/PlugIns/quick/libpyothersideplugin.dylib
+      sudo install_name_tool -change /usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/Python @executable_path/../Frameworks/Python.framework/Versions/3.6/Python yubioath-desktop.app/Contents/PlugIns/quick/libpyothersideplugin.dylib
       # Fix linking for Python _ssl
       sudo install_name_tool -change /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib @executable_path/../Frameworks/libcrypto.1.0.0.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/_ssl.cpython-36m-darwin.so
       sudo install_name_tool -change /usr/local/opt/openssl/lib/libssl.1.0.0.dylib @executable_path/../Frameworks/libssl.1.0.0.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/_ssl.cpython-36m-darwin.so
