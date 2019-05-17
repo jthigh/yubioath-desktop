@@ -39,6 +39,8 @@ install:
     then
       git clone https://github.com/aurelien-rainone/macdeployqtfix.git
       brew install swig ykpers libyubikey libusb python openssl
+      brew upgrade openssl
+      brew upgrade python
       brew install qt
       brew upgrade qt
       brew link qt -f
