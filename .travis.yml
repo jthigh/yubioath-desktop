@@ -38,7 +38,7 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]
     then
       git clone https://github.com/aurelien-rainone/macdeployqtfix.git
-      brew install swig ykpers libyubikey libusb
+      brew install swig ykpers libyubikey libusb python openssl
       brew install qt
       brew upgrade qt
       brew link qt -f
