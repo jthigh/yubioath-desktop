@@ -20,10 +20,8 @@ sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_heade
 CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
 
 # Install and upgrade brew dependencies
-brew uninstall openssl@1.1
-brew install openssl
-brew install swig ykpers libyubikey libusb qt pyenv wget zlib python
-brew upgrade swig ykpers libyubikey libusb qt pyenv wget zlib python
+brew install swig ykpers libyubikey libusb qt pyenv wget zlib pythoni openssl@1.1
+brew upgrade swig ykpers libyubikey libusb qt pyenv wget zlib python openssl@1.1
 brew link qt -f
 
 # Download, build and install pyotherside qml plugin
@@ -53,7 +51,7 @@ sudo find /usr/local/Cellar/json-c/ -name '*.dylib' -exec cp '{}' yubioath-deskt
 sudo find /usr/local/Cellar/ykpers/ -name '*.dylib' -exec cp '{}' yubioath-desktop.app/Contents/Frameworks/ ';'
 sudo find /usr/local/Cellar/libyubikey/ -name '*.dylib' -exec cp '{}' yubioath-desktop.app/Contents/Frameworks/ ';'
 sudo find /usr/local/Cellar/libusb/ -name '*.dylib' -exec cp '{}' yubioath-desktop.app/Contents/Frameworks/ ';'
-sudo find /usr/local/Cellar/openssl/ -name '*.dylib' -exec cp '{}' yubioath-desktop.app/Contents/Frameworks/ ';'
+sudo find /usr/local/Cellar/openssl@1.1/ -name '*.dylib' -exec cp '{}' yubioath-desktop.app/Contents/Frameworks/ ';'
 
 # Copy over Python.framework 
 cp -a ~/.pyenv/versions/$PYVERSION/Python.framework yubioath-desktop.app/Contents/Frameworks/
