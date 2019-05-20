@@ -43,12 +43,6 @@ script:
       docker build -t xenial-deb -f docker/xenial-deb/Dockerfile .
       docker build -t xenial-appimage -f docker/xenial-appimage/Dockerfile .
     fi
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
-    then
-      qmake
-      make
-    fi
 
 after_success:
   - mkdir deploy/
