@@ -65,9 +65,9 @@ rm -rf yubioath-desktop.app/Contents/MacOS/pymodules
 # Point pyotherside to relative custom Python, currently points to homebrew python
 sudo install_name_tool -change /usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/Python @executable_path/../Frameworks/Python.framework/Versions/3.7/Python yubioath-desktop.app/Contents/PlugIns/quick/libpyothersideplugin.dylib
 
-# Fix linking for Python _ssl
+# Fix linking for python and openssl .so's
 sudo install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib @executable_path/../Frameworks/libcrypto.1.1.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload/_ssl.cpython-37m-darwin.so
 sudo install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib @executable_path/../Frameworks/libssl.1.1.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload/_ssl.cpython-37m-darwin.so
-# Fix linking for Python _hashlib
 sudo install_name_tool -change /usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib @executable_path/../Frameworks/libcrypto.1.1.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload/_hashlib.cpython-37m-darwin.so
 sudo install_name_tool -change /usr/local/opt/openssl@1.1/lib/libssl.1.1.dylib @executable_path/../Frameworks/libssl.1.1.dylib yubioath-desktop.app/Contents/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload/_hashlib.cpython-37m-darwin.so
+sudo install_name_tool -change /usr/local/Cellar/openssl@1.1/1.1.1b/lib/libcrypto.1.1.dylib @executable_path/../Frameworks/libcrypto.1.1.dylib yubioath-desktop.app/Contents/Frameworks/libssl.1.1.dylib
