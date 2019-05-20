@@ -14,8 +14,8 @@ os:
   - osx
   - linux
 
-# High sierra
-osx_image: xcode9.4
+# Mojave
+osx_image: xcode10.2
 
 services:
   - docker
