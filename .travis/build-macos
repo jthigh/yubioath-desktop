@@ -20,7 +20,7 @@ sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_heade
 CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
 
 # Install and upgrade brew dependencies
-brew install swig ykpers libyubikey libusb qt pyenv wget zlib pythoni openssl@1.1
+brew install swig ykpers libyubikey libusb qt pyenv wget zlib python openssl@1.1
 brew upgrade swig ykpers libyubikey libusb qt pyenv wget zlib python openssl@1.1
 brew link qt -f
 
